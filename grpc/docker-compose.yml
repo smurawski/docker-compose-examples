@@ -1,0 +1,15 @@
+version: '3'
+services:
+  frontend:
+    image: ghcr.io/jeffhollan/grpc-sample-python/https-frontend:${TAG}
+    platform: linux/amd64
+    ports:
+      - 8080:8050
+    environment:
+      - GRPC_SERVER_ADDRESS=backend.internal.$AZURE_CONTAINERAPPS_ENV_DEFAULT_DOMAIN:443
+      - GRPC_DNS_RESOLVER=native
+  backend:
+    image: ghcr.io/jeffhollan/grpc-sample-python/grpc-backend:${TAG}
+    platform: linux/amd64
+    expose:
+      - 50051
