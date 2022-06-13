@@ -1,4 +1,4 @@
 services:
   helloworld:
-    image: mcr.microsoft.com/azuredocs/aks-helloworld:v1
+    image: mcr.microsoft.com/azuredocs/containerapps-helloworld:latest
     ports: 8080:80

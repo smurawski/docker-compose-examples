@@ -1,0 +1,4 @@
+services:
+  helloworld:
+    image: $ACR_LOGIN_SERVER/containerapps-helloworld:latest
+    ports: 8080:80
