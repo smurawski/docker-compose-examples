@@ -1,0 +1,91 @@
+# GitHub CI build pipeline
+name: Containerapp Compose Extension Test
+
+on:
+  schedule:
+    - cron: '0 13 * * *'
+  push:
+    branches:
+      - main
+    paths:
+      - '**/docker-compose.yml'
+      - .github/workflows/daily_test.yml
+
+jobs:
+  integration_tests:
+    runs-on: ubuntu-latest
+    env:
+      RESOURCE_GROUP: containerapp-compose-daily
+      ENVIRONMENT_NAME: containerappcomposedaily
+      TAG: main
+    steps:
+      - name: Checkout examples repo
+        uses: actions/checkout@v3
+        with:
+          path: examples
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Add extension
+        run: |
+          az extension add --name containerapp --upgrade --yes
+          az extension add --name containerapp-compose --upgrade --yes
+          az extension list
+      - name: Extension Help
+        run: |
+          az containerapp compose --help
+          az containerapp compose create --help
+      - name: Create resource group
+        run: |
+          az group create --name $RESOURCE_GROUP --location eastus
+
+      - name: Simple Example
+        run: |
+          cd examples/simple
+
+          az containerapp compose create \
+            --environment $ENVIRONMENT_NAME \
+            --resource-group $RESOURCE_GROUP
+
+          URL=$(az containerapp show \
+            --resource-group $RESOURCE_GROUP \
+            --name helloworld \
+            --query 'properties.configuration.ingress.fqdn' \
+            -o tsv)
+          curl https://$URL
+
+      - name: GRPC Example
+        run: |
+          cd examples/grpc
+
+          az containerapp compose create \
+          --environment $ENVIRONMENT_NAME \
+          --resource-group $RESOURCE_GROUP \
+          --transport backend=http2
+
+          URL=$(az containerapp show \
+            --resource-group $RESOURCE_GROUP \
+            --name frontend \
+            --query 'properties.configuration.ingress.fqdn' \
+            -o tsv)
+          curl https://$URL
+
+      - name: DotNet API Example
+        run: |
+          cd examples/dotnet_api
+
+          az containerapp compose create \
+            --environment $ENVIRONMENT_NAME \
+            --resource-group $RESOURCE_GROUP
+
+          URL=$(az containerapp show \
+            --resource-group $RESOURCE_GROUP \
+            --name api \
+            --query 'properties.configuration.ingress.fqdn' \
+            -o tsv)
+          curl https://$URL/weatherforecast
+
+
+      - name: Cleanup Resource Group
+        run: |
+          az group delete --name $RESOURCE_GROUP --yes

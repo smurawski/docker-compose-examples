@@ -1,0 +1,8 @@
+version: '3'
+services:
+  api:
+    build:
+      context: ./src
+      dockerfile: ./TodoApi/Dockerfile
+    ports:
+      - 8080:80
