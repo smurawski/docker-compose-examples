@@ -17,7 +17,7 @@ az containerapp compose create \
     --resource-group $resource_group_name
 
 URL=$(az containerapp show --resource-group $resource_group_name --name greeting-service --query 'properties.configuration.ingress.fqdn' -o tsv)
-curl https://$URL/greet
+curl -s https://$URL/greet
 
 az group delete --name $resource_group_name -y --no-wait
 ```

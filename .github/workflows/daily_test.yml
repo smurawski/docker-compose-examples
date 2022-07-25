@@ -85,6 +85,20 @@ jobs:
             -o tsv)
           curl -s https://$URL/weatherforecast
 
+      - name: Node JS Example
+        run: |
+          cd examples/nodejs_greet
+
+          az containerapp compose create \
+            --environment $ENVIRONMENT_NAME \
+            --resource-group $RESOURCE_GROUP
+
+          URL=$(az containerapp show \
+            --resource-group $RESOURCE_GROUP \
+            --name greeting-service \
+            --query 'properties.configuration.ingress.fqdn' \
+            -o tsv)
+          curl -s https://$URL/greet
 
       - name: Cleanup Resource Group
         if: always()
