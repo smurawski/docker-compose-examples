@@ -87,5 +87,6 @@ jobs:
 
 
       - name: Cleanup Resource Group
+        if: always()
         run: |
           az group delete --name $RESOURCE_GROUP --yes
