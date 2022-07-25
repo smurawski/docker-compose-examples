@@ -52,7 +52,7 @@ jobs:
             --name helloworld \
             --query 'properties.configuration.ingress.fqdn' \
             -o tsv)
-          curl https://$URL
+          curl -s https://$URL
 
       - name: GRPC Example
         run: |
@@ -68,7 +68,7 @@ jobs:
             --name frontend \
             --query 'properties.configuration.ingress.fqdn' \
             -o tsv)
-          curl https://$URL
+          curl -s https://$URL
 
       - name: DotNet API Example
         run: |
@@ -83,7 +83,7 @@ jobs:
             --name api \
             --query 'properties.configuration.ingress.fqdn' \
             -o tsv)
-          curl https://$URL/weatherforecast
+          curl -s https://$URL/weatherforecast
 
 
       - name: Cleanup Resource Group
