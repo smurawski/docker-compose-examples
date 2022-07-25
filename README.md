@@ -13,9 +13,9 @@ This repo contains a `.devcontainer` directory. This directory contains files to
 
 The Dev Container configuration will already have the `containerapp` and `containerapp-compose` Azure CLI extensions installed, so will not need to run the commands listed in the section above.
 
-To run the examples, you will need to authenticate using Azure CLI. Run the following command to authenticate using the [device authorization grant flow](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-device-code):
+To run the examples, you will need to authenticate using Azure CLI. Run the following command to authenticate using the [device authorization grant flow](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-device-code), then follow the directions to complete the sign-in.
 
-```bash
+```azurecli
 az login --use-device-code
 ```
 
