@@ -15,8 +15,8 @@ jobs:
   integration_tests:
     runs-on: ubuntu-latest
     env:
-      RESOURCE_GROUP: containerapp-compose-daily
-      ENVIRONMENT_NAME: containerappcomposedaily
+      RESOURCE_GROUP: ${{ format('{0}{1}', 'containerapp-compose-daily-', github.run_id) }}
+      ENVIRONMENT_NAME: ${{ format('{0}{1}', 'ccd', github.run_id) }}
       TAG: main
     steps:
       - name: Checkout examples repo
