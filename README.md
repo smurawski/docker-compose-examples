@@ -24,3 +24,5 @@ az login --use-device-code
 * [Simple example with one container](./simple/README.md)
 * [Simple example with a private registry](./simple_with_private_registry/README.md)
 * [Two container GRPC example](./grpc/README.md)
+* [.NET Web Api example](./dotnet_api/README.md)
+* [NodeJS example](./nodejs_greet/README.md)
