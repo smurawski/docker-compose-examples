@@ -17,7 +17,7 @@ az containerapp compose create \
     --transport backend=http2 
 
 URL=$(az containerapp show --resource-group $resource_group_name --name frontend --query 'properties.configuration.ingress.fqdn' -o tsv)
-curl https://$URL/hello
+curl -s https://$URL/hello
 
 az group delete --name $resource_group_name --yes
 ```

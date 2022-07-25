@@ -68,7 +68,7 @@ jobs:
             --name frontend \
             --query 'properties.configuration.ingress.fqdn' \
             -o tsv)
-          curl -s https://$URL
+          curl -s https://$URL/hello
 
       - name: DotNet API Example
         run: |
