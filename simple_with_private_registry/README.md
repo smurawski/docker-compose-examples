@@ -25,7 +25,7 @@ az containerapp compose create --environment $environment_name \
                                --registry-password $password 
 
 URL=$(az containerapp show --resource-group $resource_group_name --name helloworld --query 'properties.configuration.ingress.fqdn' -o tsv)
-curl https://$URL
+curl -IL https://$URL
 
 az group delete --name $resource_group_name --yes
 ```
