@@ -5,7 +5,7 @@
 ```azurecli
 tag="latest"
 repository="containerapps-helloworld"
-image_name ="$repository:$tag"
+image_name="$repository:$tag"
 source_image="mcr.microsoft.com/azuredocs/$image_name"
 compose_hash=$(md5sum docker-compose.yml)
 resource_group_name="simple-${compose_hash:27:4}"
